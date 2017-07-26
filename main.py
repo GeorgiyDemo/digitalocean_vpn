@@ -4,6 +4,8 @@ from string import digits
 
 ssh_fingerprint = "YOUR_FINGERPRINT"
 key = "YOUR_TOKEN"
+key_dir = str(os.path.expanduser("~"))+"/.ssh/KEY"
+
 location_list = ["ams2","sgp1","lon1","ams3","fra1","tor1","blr1"]
 buf_location =""
 buf_name = ""
@@ -43,12 +45,12 @@ def create():
 		    #Получаем IP дроплета по тегу
 		    r = requests.get("https://api.digitalocean.com/v2/droplets?page=1&per_page=1&tag_name="+buf_name, headers=headers).json()
 		    droplet_ip = r["droplets"][0]["networks"]["v4"][0]["ip_address"]
-		    print("* IP созданного дроплета: "+str(droplet_ip)+"\n* Ожидание развертки ssh (+-45 сек.)")
+		    print("* IP созданного дроплета: "+str(droplet_ip)+"\n* Ожидание развертки ssh (+-60 сек.)")
 
 		    #Подключаемся к дроплету через SSH по ключам, чуть ждем
-		    time.sleep(45)
+		    time.sleep(60)
 		    print("* Исполняем основной сценарий..")
-		    os.system('ssh -i KEY_DIR root@'+droplet_ip+' "yum install git -y && git clone https://github.com/georgiydemo/VPN && cd VPN && chmod +x docker.sh && ./docker.sh"')
+		    os.system('ssh -i '+key_dir+' root@'+droplet_ip+' "yum install git -y && git clone https://github.com/georgiydemo/VPN && cd VPN && chmod +x docker.sh && ./docker.sh"')
 
 def destroy():
 
