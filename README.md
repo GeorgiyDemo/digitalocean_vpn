@@ -11,6 +11,11 @@ cd digitalocean_vpn
 python3 main.py
 ```
 
+## Requirements
+
+* [requests]
+* [python_digitalocean]
+
 ## Configure setup
 
 Read below how to get *YOUR_TOKEN*, *YOUR_FINGERPRINT* and *KEY_DIR*. First is needed to create/destroy droplets by your account, ssh fingerprint and directory is to be able to access created droplet using SSH
@@ -40,7 +45,7 @@ ssh-keygen -t RSA
 
 ## Tweak VPN
 
-If you want to modify vpn just replace line 53 in main.py
+If you want to modify vpn just replace line 61 in main.py
 
 ```python
 os.system('ssh -i '+key_dir+' root@'+droplet_ip+' "yum install git -y && git clone https://github.com/georgiydemo/VPN && cd VPN && chmod +x docker.sh && ./docker.sh"')
@@ -52,4 +57,6 @@ os.system('ssh -i '+key_dir+' root@'+droplet_ip+' "yum install git -y && git clo
 
 [VPN]: https://en.wikipedia.org/wiki/Virtual_private_network
 [DigitalOcean]: https://www.digitalocean.com/
+[requests]: https://github.com/requests/requests
+[python_digitalocean]: https://github.com/koalalorenzo/python-digitalocean
 [MIT]: https://tldrlegal.com/license/mit-license
